@@ -1,0 +1,1 @@
+# openshift4-nodejs-ts-mysql-by-mysql2-ex
