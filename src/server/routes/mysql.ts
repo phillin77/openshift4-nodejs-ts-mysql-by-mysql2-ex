@@ -16,10 +16,12 @@ function initDbConn():mysql.Pool|null {
   if (mysqlURL == null) {
     var mysqlHost, mysqlPort, mysqlDatabase, mysqlPassword, mysqlUser;
     // If using multi-database modified by p.l.77 (MONGODB_DATABASE_SERVICE_NAME & MYSQL_DATABASE_SERVICE_NAME)
-    if (process.env.MYSQL_DATABASE_SERVICE_NAME) {
-      var mysqlServiceName = process.env.MYSQL_DATABASE_SERVICE_NAME.toUpperCase();
+    if (process.env.MARIADB_DATABASE_SERVICE_NAME) {
+      var mysqlServiceName = process.env.MARIADB_DATABASE_SERVICE_NAME.toUpperCase();
       mysqlHost = process.env[mysqlServiceName + '_SERVICE_HOST'];
       mysqlPort = process.env[mysqlServiceName + '_SERVICE_PORT'];
+      if (mysqlServiceName==="MARIADB")  // For MariaDB, 以下3個設定維持跟 MySQL 一樣
+        mysqlServiceName = "MYSQL";
       mysqlDatabase = process.env[mysqlServiceName + '_DATABASE'];
       mysqlPassword = process.env[mysqlServiceName + '_PASSWORD'];
       mysqlUser = process.env[mysqlServiceName + '_USER'];
@@ -29,6 +31,8 @@ function initDbConn():mysql.Pool|null {
       var mysqlServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase();
       mysqlHost = process.env[mysqlServiceName + '_SERVICE_HOST'];
       mysqlPort = process.env[mysqlServiceName + '_SERVICE_PORT'];
+      if (mysqlServiceName==="MARIADB")  // For MariaDB, 以下3個設定維持跟 MySQL 一樣
+        mysqlServiceName = "MYSQL";
       mysqlDatabase = process.env[mysqlServiceName + '_DATABASE'];
       mysqlPassword = process.env[mysqlServiceName + '_PASSWORD'];
       mysqlUser = process.env[mysqlServiceName + '_USER'];
